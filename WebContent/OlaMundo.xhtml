@@ -9,8 +9,10 @@
 	<h:body>
 		<h:form>
 			Seu nome
-			<h:inputText/>
-			<h:commandButton value="Enviar"/>
+			<h:inputText value="#{olaMundoBean.nome}"/>
+			<h:commandButton value="Enviar" action="#{olaMundoBean.maisculo}"/>
+			
+			#{olaMundoBean.nome}
 		</h:form>
 	</h:body>
 </html>
