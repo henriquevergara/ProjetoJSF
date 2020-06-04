@@ -6,21 +6,32 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.henrique.cursojsf2.model.Produto;
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class GestaoProdutosBean implements Serializable {
 	
+
 	private static final long serialVersionUID = 8420319774242452876L;
 	
 	private Produto produto = new Produto();
 	private List<Produto> produtos = new ArrayList<>();
+	private Produto produtoSelecionado;
 	
 
+	public Produto getProdutoSelecionado() {
+		return produtoSelecionado;
+	}
+	
+	public void setProdutoSelecionado(Produto produtoSelecionado) {
+		this.produtoSelecionado = produtoSelecionado;
+	}
+	
 	@PostConstruct
 	public void inicializar() {
 		System.out.println("Inicializou Bean.");
@@ -58,6 +69,25 @@ public class GestaoProdutosBean implements Serializable {
 			return "AjudaGestaoProdutos?faces-redirect=true";
 		}else {
 		    return "AjudaGestaoProdutosTelefone?faces-redirect=true";
+		}
+		
+	}
+	
+	
+	
+	public void excluir() {
+		this.produtos.remove(this.produtoSelecionado);
+	}
+	
+	public void verificarInclusao(){
+		
+		if(this.produto.getFabricante().isEmpty() && this.produto.getCategoria().isEmpty()) {
+			this.produto.setFabricante("Sem fabricante.");
+			this.produto.setCategoria("Sem categoria.");
+		} else if (this.produto.getCategoria().isEmpty()) {
+			this.produto.setCategoria("Sem categoria.");
+		} else if(this.produto.getFabricante().isEmpty()) {
+			this.produto.setFabricante("Sem fabricante.");
 		}
 		
 	}
